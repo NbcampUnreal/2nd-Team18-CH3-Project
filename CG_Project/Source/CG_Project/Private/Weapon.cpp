@@ -1,4 +1,7 @@
 #include "Weapon.h"
+#include "Kismet/GameplayStatics.h"
+#include "DrawDebugHelpers.h"
+#include "Engine/DamageEvents.h"
 
 
 AWeapon::AWeapon()
@@ -33,9 +36,9 @@ void AWeapon::Fire()
 		AActor* HitActor = HitResult.GetActor();
 		if (HitActor)
 		{
-			FDamageEvent DamageEvent;
+			/*FDamageEvent DamageEvent;
 			HitActor->TakeDamage(DamageAmount, DamageEvent, nullptr, this);
-			UE_LOG(LogTemp, Warning, TEXT("Hit Actor: %s, Applied Damage: %.1f"), *HitActor->GetName(), DamageAmount);
+			UE_LOG(LogTemp, Warning, TEXT("Hit Actor: %s, Applied Damage: %.1f"), *HitActor->GetName(), DamageAmount);*/
 		}
 
 		DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 10.0f, 16, FColor::Green, false, 2.0f);
