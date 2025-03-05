@@ -51,6 +51,6 @@ public:
 	void EndWave();
 	//웨이브 시간 종료
 	void OnWaveTimeUp();
-
+	//HUD 업데이트
 	void UpdateHUD();
 };

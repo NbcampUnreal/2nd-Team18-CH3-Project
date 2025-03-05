@@ -1,6 +1,9 @@
 #include "CG_GameState.h"
 #include "Kismet/GameplayStatics.h"
 #include "SpawnVolume.h"
+#include "CG_PlayerController.h"
+#include "Components/TextBlock.h"
+#include "Blueprint/UserWidget.h"
 
 ACG_GameState::ACG_GameState()
 {
@@ -19,6 +22,7 @@ void ACG_GameState::BeginPlay()
 {
 	Super::BeginPlay();
 
+	UpdateHUD();
 	StartWave();
 
 	//HUD 업데이트
@@ -34,7 +38,7 @@ void ACG_GameState::BeginPlay()
 //웨이브 시작
 void ACG_GameState::StartWave()
 {
-
+	UpdateHUD();
 }
 
 //웨이브 종료
@@ -46,7 +50,7 @@ void ACG_GameState::EndWave()
 //웨이브 시간 종료
 void ACG_GameState::OnWaveTimeUp()
 {
-
+	//시간 동결 후 보스 소환
 }
 
 //현재 점수
@@ -96,7 +100,8 @@ void ACG_GameState::OnEnemyDestroyed()
 //게임오버
 void ACG_GameState::OnGameOver()
 {
-
+	UpdateHUD();
+	UE_LOG(LogTemp, Warning, TEXT("Game Over!!"));
 }
 
 //HUD 업데이트
