@@ -46,7 +46,7 @@ ACG_Character::ACG_Character()
 void ACG_Character::BeginPlay()
 {
 	Super::BeginPlay();
-	//UpdateOverheadHP();
+	UpdateOverheadHP();
 }
 
 // 캐릭터 조작 관련
@@ -119,11 +119,11 @@ void ACG_Character::StopSprint(const FInputActionValue& value)
 	}
 }
 
-//// 캐릭터 머리 위 HP바
-//void ACG_Character::UpdateOverheadHP()
-//{
-//	// 추가해야됨
-//}
+// 캐릭터 머리 위 hp바
+void ACG_Character::UpdateOverheadHP()
+{
+	// 추가해야됨
+}
 
 // 현재 체력 get함수
 float ACG_Character::GetHealth() const
@@ -136,8 +136,8 @@ void ACG_Character::HealHealth(float Amount)
 {
 	// Clamp(최소~최대 체력 사이의 값, 최소체력, 최대체력)
 	CurrentHealth = FMath::Clamp(CurrentHealth + Amount, 0.0f, MaxHealth);
-	//// 계산이 끝난 뒤 체력바 위젯에 업데이트
-	//UpdateOverheadHP();
+	// 계산이 끝난 뒤 체력바 위젯에 업데이트
+	UpdateOverheadHP();
 }
 
 //// 캐릭터 데미지 공식(레벨 비례 데미지 증가 포함해야 함)
@@ -151,9 +151,9 @@ void ACG_Character::HealHealth(float Amount)
 //{
 //	// 추가해야됨
 //}
-//
-//// 캐릭터 사망시 이벤트(게임오버 등)
-//void ACG_Character::OnDeath()
-//{
-//	// 추가해야됨
-//}
+
+// 캐릭터 사망시 이벤트(게임오버 등)
+void ACG_Character::OnDeath()
+{
+	// 추가해야됨
+}

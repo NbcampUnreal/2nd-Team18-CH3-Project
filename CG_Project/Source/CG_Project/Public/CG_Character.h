@@ -86,11 +86,11 @@ protected:
 	UFUNCTION()
 	void StopSprint(const FInputActionValue& value);
 
-	//// 플레이어 사망
-	//void OnDeath();
+	// 플레이어 사망
+	void OnDeath();
 
-	//// 머리 위 체력바 관련
-	//void UpdateOverheadHP();
+	// 머리 위 체력바 관련
+	void UpdateOverheadHP();
 
 private:
 	// 기본 이동속도
