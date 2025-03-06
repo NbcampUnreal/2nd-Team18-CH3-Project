@@ -1,6 +1,6 @@
 #include "CG_Character.h"
-// #include "플레이어 컨트롤러 헤더"
-// #include "게임스테이트 헤더"
+#include "CG_PlayerController.h"
+#include "CG_GameState.h"
 #include "EnhancedInputComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -54,6 +54,71 @@ void ACG_Character::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	if (UEnhancedInputComponent* EnhancedInput = Cast<UEnhancedInputComponent>(PlayerInputComponent))
+	{
+		if (ACG_PlayerController* PlayerController = Cast<ACG_PlayerController>(GetController()))
+		{
+			if (PlayerController->MoveAction)
+			{
+				EnhancedInput->BindAction
+				(
+					PlayerController->MoveAction,
+					ETriggerEvent::Triggered,
+					this,
+					&ACG_Character::Move
+				);
+			}
+
+			if (PlayerController->JumpAction)
+			{
+				EnhancedInput->BindAction
+				(
+					PlayerController->JumpAction,
+					ETriggerEvent::Triggered,
+					this,
+					&ACG_Character::StartJump
+				);
+
+				EnhancedInput->BindAction
+				(
+					PlayerController->JumpAction,
+					ETriggerEvent::Completed,
+					this,
+					&ACG_Character::StopJump
+				);
+			}
+
+			if (PlayerController->LookAction)
+			{
+				EnhancedInput->BindAction
+				(
+					PlayerController->LookAction,
+					ETriggerEvent::Triggered,
+					this,
+					&ACG_Character::Look
+				);
+			}
+
+			if (PlayerController->SprintAction)
+			{
+				EnhancedInput->BindAction
+				(
+					PlayerController->SprintAction,
+					ETriggerEvent::Triggered,
+					this,
+					&ACG_Character::StartSprint
+				);
+
+				EnhancedInput->BindAction
+				(
+					PlayerController->SprintAction,
+					ETriggerEvent::Completed,
+					this,
+					&ACG_Character::StopSprint
+				);
+			}
+		}
+	}
 }
 
 // 이동
