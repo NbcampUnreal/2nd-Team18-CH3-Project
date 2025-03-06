@@ -4,6 +4,11 @@
 #include "GameFramework/GameState.h"
 #include "CG_GameState.generated.h"
 
+class ASpawnVolume;
+class ACG_PlayerController;
+class UCG_GameInstance;
+
+
 UCLASS()
 class CG_PROJECT_API ACG_GameState : public AGameState
 {
@@ -26,6 +31,8 @@ public:
 	int32 MaxLevels; //최대 웨이브
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Wave")
 	float LevelDuration; //웨이브 현재 시간
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Wave")
+	int32 Min; //남은 분
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Wave")
 	TArray<int32> EnemyToSpawnPerWave; //웨이브 당 적 스폰
 
@@ -51,6 +58,13 @@ public:
 	void EndWave();
 	//웨이브 시간 종료
 	void OnWaveTimeUp();
+	void EndGame();
 	//HUD 업데이트
 	void UpdateHUD();
+
+private:
+	//헬퍼 함수
+	//ASpawnVolume *GetSpawnVolume() const;
+	ACG_PlayerController *GetCG_PlayerController() const;
+	UCG_GameInstance *GetCG_GameInstance() const;
 };

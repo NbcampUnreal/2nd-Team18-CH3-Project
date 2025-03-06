@@ -2,6 +2,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "SpawnVolume.h"
 #include "CG_PlayerController.h"
+#include "CG_GameInstance.h"
 #include "Components/TextBlock.h"
 #include "Blueprint/UserWidget.h"
 
@@ -11,7 +12,8 @@ ACG_GameState::ACG_GameState()
 	DestroyEnemyCount = 0;
 	CurrentLevelIndex = 0;
 	MaxLevels = 0;
-	LevelDuration = 0;
+	LevelDuration = 0.0f;
+	Min = 0;
 	EnemyToSpawnPerWave = {10};
 	Score = 0;
 	
@@ -38,19 +40,68 @@ void ACG_GameState::BeginPlay()
 //웨이브 시작
 void ACG_GameState::StartWave()
 {
+	if (UCG_GameInstance* CG_GameInstance = GetCG_GameInstance())
+	{
+		CurrentLevelIndex = CG_GameInstance->CurrentLevelIndex;
+	}
+	//카운트 초기화, 이전 Wave 몹 제거
+	SpawnedEnemyCount = 0;
+	DestroyEnemyCount = 0;
+
+	//Wave 타이머 시작
+	Min = 10;
+	LevelDuration = 60.0f;
+	GetWorldTimerManager().SetTimer(
+		WaveTimerHandle,
+		this,
+		&ACG_GameState::OnWaveTimeUp,
+		LevelDuration,
+		true
+	);
 	UpdateHUD();
 }
 
 //웨이브 종료
 void ACG_GameState::EndWave()
 {
+	GetWorldTimerManager().ClearTimer(WaveTimerHandle); //WaveTimerHandle 초기화
 
+	++CurrentLevelIndex; //레벨 증가
+	if (CurrentLevelIndex >= MaxLevels)
+	{
+		EndGame();
+	}
+	else
+	{
+		StartWave();
+	}
 }
 
 //웨이브 시간 종료
 void ACG_GameState::OnWaveTimeUp()
 {
+	--Min;
+	if (Min <= 0) //분이 0이 되면
+	{
+		//WaveTimerHandle이 작동중인지 확인하고
+		if (!GetWorldTimerManager().IsTimerActive(WaveTimerHandle)) 
+		{	//작동중이면 반복을 끈다
+			GetWorldTimerManager().SetTimer(
+				WaveTimerHandle,
+				this,
+				&ACG_GameState::OnWaveTimeUp,
+				LevelDuration,
+				false
+			);
+		}
+	}
+
 	//시간 동결 후 보스 소환
+}
+
+void ACG_GameState::EndGame()
+{
+
 }
 
 //현재 점수
@@ -108,4 +159,19 @@ void ACG_GameState::OnGameOver()
 void ACG_GameState::UpdateHUD()
 {
 
+}
+
+//ASpawnVolume* ACG_GameState::GetSpawnVolume() const
+//{
+//	return
+//}
+
+ACG_PlayerController* ACG_GameState::GetCG_PlayerController() const
+{
+	return Cast<ACG_PlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+}
+
+UCG_GameInstance* ACG_GameState::GetCG_GameInstance() const
+{
+	return Cast<UCG_GameInstance>(GetGameInstance());
 }
