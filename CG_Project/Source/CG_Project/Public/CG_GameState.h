@@ -30,7 +30,7 @@ public:
 	TArray<int32> EnemyToSpawnPerWave; //웨이브 당 적 스폰
 
 	FTimerHandle WaveTimerHandle; //웨이브 타이머핸들
-	FTimerHandle HUDUpdateTimerHandle; //HUD 업데이트
+	FTimerHandle HUDUpdateTimerHandle; //HUD 업데이트 타이머 핸들
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Score")
 	int32 Score; //총점 저장 변수
