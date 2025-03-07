@@ -13,7 +13,8 @@ ACG_PlayerController::ACG_PlayerController()
 	MoveAction(nullptr),
 	JumpAction(nullptr),
 	LookAction(nullptr),
-	SprintAction(nullptr)
+	SprintAction(nullptr),
+	HUDWidgetInstance(nullptr)
 {
 }
 
@@ -35,4 +36,18 @@ void ACG_PlayerController::BeginPlay()
 			}
 		}
 	}
+
+	if (HUDWidgetClass)
+	{
+		HUDWidgetInstance = CreateWidget<UUserWidget>(this, HUDWidgetClass);
+		if (HUDWidgetInstance)
+		{
+			HUDWidgetInstance->AddToViewport();
+		}
+	}
+}
+
+UUserWidget* ACG_PlayerController::GetHUDWidget() const
+{
+	return HUDWidgetInstance;
 }

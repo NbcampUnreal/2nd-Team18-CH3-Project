@@ -12,8 +12,8 @@ ACG_GameState::ACG_GameState()
 	DestroyEnemyCount = 0;
 	CurrentLevelIndex = 0;
 	MaxLevels = 0;
-	LevelDuration = 0.0f;
-	Min = 0;
+	LevelDuration = 60.0f;
+	Min = 10;
 	EnemyToSpawnPerWave = {10};
 	Score = 0;
 	
@@ -49,8 +49,6 @@ void ACG_GameState::StartWave()
 	DestroyEnemyCount = 0;
 
 	//Wave 타이머 시작
-	Min = 10;
-	LevelDuration = 60.0f;
 	GetWorldTimerManager().SetTimer(
 		WaveTimerHandle,
 		this,
@@ -80,21 +78,15 @@ void ACG_GameState::EndWave()
 //웨이브 시간 종료
 void ACG_GameState::OnWaveTimeUp()
 {
-	--Min;
-	if (Min <= 0) //분이 0이 되면
+	if (Min > 0) //분이 0이 되면
 	{
-		//WaveTimerHandle이 작동중인지 확인하고
-		if (!GetWorldTimerManager().IsTimerActive(WaveTimerHandle)) 
-		{	//작동중이면 반복을 끈다
-			GetWorldTimerManager().SetTimer(
-				WaveTimerHandle,
-				this,
-				&ACG_GameState::OnWaveTimeUp,
-				LevelDuration,
-				false
-			);
-		}
+		--Min;
 	}
+	else
+	{
+		GetWorldTimerManager().ClearTimer(WaveTimerHandle);
+	}
+
 
 	//시간 동결 후 보스 소환
 }
@@ -158,7 +150,27 @@ void ACG_GameState::OnGameOver()
 //HUD 업데이트
 void ACG_GameState::UpdateHUD()
 {
-
+	if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
+	{
+		if (ACG_PlayerController* CG_PlayerController = Cast<ACG_PlayerController>(PlayerController))
+		{
+			if (UUserWidget* HUDWidget = CG_PlayerController->GetHUDWidget())
+			{
+				if (UTextBlock* TimerText = Cast<UTextBlock>(HUDWidget->GetWidgetFromName(TEXT("Timer"))))
+				{
+					float RemainingTime = GetWorldTimerManager().GetTimerRemaining(WaveTimerHandle);
+					if (GetWorldTimerManager().IsTimerActive(WaveTimerHandle))
+					{
+						TimerText->SetText(FText::FromString(FString::Printf(TEXT("%d : %.0f"), Min, RemainingTime)));
+					}
+					else
+					{
+						TimerText->SetText(FText::FromString(FString::Printf(TEXT("Boss Stage"))));
+					}
+				}
+			}
+		}
+	}
 }
 
 //ASpawnVolume* ACG_GameState::GetSpawnVolume() const
