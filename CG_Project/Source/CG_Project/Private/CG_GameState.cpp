@@ -78,7 +78,7 @@ void ACG_GameState::EndWave()
 //웨이브 시간 종료
 void ACG_GameState::OnWaveTimeUp()
 {
-	if (Min > 0) //분이 0이 되면
+	if (Min > 0) //분이 0 아래가 되면
 	{
 		--Min;
 	}
