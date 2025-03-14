@@ -5,6 +5,7 @@
 #include "CG_GameInstance.h"
 #include "Components/TextBlock.h"
 #include "Blueprint/UserWidget.h"
+#include "CG_PlayerState.h"
 
 ACG_GameState::ACG_GameState()
 {
@@ -118,6 +119,19 @@ void ACG_GameState::OnEnemyDestroyed()
 	if (SpawnedEnemyCount > 0 && DestroyEnemyCount >= SpawnedEnemyCount)
 	{
 		/*GenerateEnemy();*/
+	}
+
+	//플레이어 컨트롤러 가져오기
+	ACG_PlayerController* PlayerController = GetWorld()->GetFirstPlayerController<ACG_PlayerController>();
+	if (PlayerController)
+	{	//플레이어 컨트롤러에서 플레이어 스테이트 가져오기
+		ACG_PlayerState* PlayerState = PlayerController->GetPlayerState<ACG_PlayerState>();
+		if (PlayerState)
+		{
+			int32 Exp = 1;
+			PlayerState->GainExp(Exp);
+			UE_LOG(LogTemp, Warning, TEXT("Player gained %d EXP"), Exp)
+		}
 	}
 }
 
