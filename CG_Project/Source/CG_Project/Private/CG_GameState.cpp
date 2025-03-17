@@ -17,6 +17,7 @@ ACG_GameState::ACG_GameState()
 	Min = 10;
 	EnemyToSpawnPerWave = {10};
 	Score = 0;
+	Exp = 1;
 	
 
 }
@@ -128,7 +129,6 @@ void ACG_GameState::OnEnemyDestroyed()
 		ACG_PlayerState* PlayerState = PlayerController->GetPlayerState<ACG_PlayerState>();
 		if (PlayerState)
 		{
-			int32 Exp = 1;
 			PlayerState->GainExp(Exp);
 			UE_LOG(LogTemp, Warning, TEXT("Player gained %d EXP"), Exp)
 		}

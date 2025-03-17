@@ -18,7 +18,7 @@ public:
 	//레벨업 함수
 	UFUNCTION(BlueprintCallable, Category = "Level")
 	void LevelUp();
-
+	
 	//현재 레벨
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Player State")
 	int32 PlayerLevel;

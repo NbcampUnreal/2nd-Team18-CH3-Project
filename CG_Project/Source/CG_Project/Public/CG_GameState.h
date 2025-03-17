@@ -24,6 +24,8 @@ public:
 	int32 SpawnedEnemyCount; //스폰시킬 적 갯수
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Enemy")
 	int32 DestroyEnemyCount; //죽인 적 수
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Enemy")
+	int32 Exp; //경험치
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Wave")
 	int32 CurrentLevelIndex; //현재 웨이브
