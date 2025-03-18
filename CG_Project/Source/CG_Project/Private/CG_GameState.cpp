@@ -26,7 +26,6 @@ void ACG_GameState::BeginPlay()
 {
 	Super::BeginPlay();
 
-	UpdateHUD();
 	StartWave();
 
 	//HUD 업데이트
@@ -42,6 +41,14 @@ void ACG_GameState::BeginPlay()
 //웨이브 시작
 void ACG_GameState::StartWave()
 {
+	if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
+	{
+		if (ACG_PlayerController* CG_PlayerController = Cast<ACG_PlayerController>(PlayerController))
+		{
+			CG_PlayerController->ShowGameHUD();
+		}
+	}
+
 	if (UCG_GameInstance* CG_GameInstance = GetCG_GameInstance())
 	{
 		CurrentLevelIndex = CG_GameInstance->CurrentLevelIndex;
@@ -58,7 +65,6 @@ void ACG_GameState::StartWave()
 		LevelDuration,
 		true
 	);
-	UpdateHUD();
 }
 
 //웨이브 종료
@@ -95,7 +101,13 @@ void ACG_GameState::OnWaveTimeUp()
 
 void ACG_GameState::EndGame()
 {
-
+	if (APlayerController *PlayerController = GetWorld()->GetFirstPlayerController())
+	{
+		if (ACG_PlayerController* CG_PlayerController = Cast<ACG_PlayerController>(PlayerController))
+		{
+			CG_PlayerController->ShowGameOverMenu(true);
+		}
+	}
 }
 
 //현재 점수
@@ -157,7 +169,6 @@ void ACG_GameState::OnEnemyDestroyed()
 //게임오버
 void ACG_GameState::OnGameOver()
 {
-	UpdateHUD();
 	UE_LOG(LogTemp, Warning, TEXT("Game Over!!"));
 }
 

@@ -14,7 +14,9 @@ ACG_PlayerController::ACG_PlayerController()
 	JumpAction(nullptr),
 	LookAction(nullptr),
 	SprintAction(nullptr),
-	HUDWidgetInstance(nullptr)
+	HUDWidgetInstance(nullptr),
+	MainMenuWidgetClass(nullptr),
+	MainMenuWidgetInstance(nullptr)
 {
 }
 
@@ -37,17 +39,177 @@ void ACG_PlayerController::BeginPlay()
 		}
 	}
 
-	if (HUDWidgetClass)
+	//게임 실행 시 메뉴레벨에서 메뉴 UI 먼저 표시
+	FString CurrentMapName = GetWorld()->GetMapName();
+	if (CurrentMapName.Contains("MenuLevel"))
 	{
-		HUDWidgetInstance = CreateWidget<UUserWidget>(this, HUDWidgetClass);
-		if (HUDWidgetInstance)
-		{
-			HUDWidgetInstance->AddToViewport();
-		}
+		ShowGameStartMenu();
 	}
 }
 
 UUserWidget* ACG_PlayerController::GetHUDWidget() const
 {
 	return HUDWidgetInstance;
+}
+
+//메뉴 UI 표시
+void ACG_PlayerController::ShowGameStartMenu()
+{	//HUD가 켜져 있다면 닫기
+	if (HUDWidgetInstance)
+	{
+		HUDWidgetInstance->RemoveFromParent();
+		HUDWidgetInstance = nullptr;
+	}
+	//이미 메뉴가 떠있으면 제거
+	if (MainMenuWidgetInstance)
+	{
+		MainMenuWidgetInstance->RemoveFromParent();
+		MainMenuWidgetInstance = nullptr;
+	}
+	//종료 메뉴가 떠있으면 제거
+	if (EndMenuWidgetInstance)
+	{
+		EndMenuWidgetInstance->RemoveFromParent();
+		EndMenuWidgetInstance = nullptr;
+	}
+	//레벨업 메뉴가 떠있으면 제거
+	if (LevelUpWidgetInstance)
+	{
+		LevelUpWidgetInstance->RemoveFromParent();
+		LevelUpWidgetInstance = nullptr;
+	}
+
+	if (MainMenuWidgetClass)
+	{
+		MainMenuWidgetInstance = CreateWidget<UUserWidget>(this, MainMenuWidgetClass);
+		if (MainMenuWidgetInstance)
+		{
+			MainMenuWidgetInstance->AddToViewport();
+
+			bShowMouseCursor = true;
+			SetInputMode(FInputModeUIOnly());
+		}
+	}
+}
+
+void ACG_PlayerController::ShowGameOverMenu(bool bIsClear)
+{	//HUD가 켜져 있다면 닫기
+	if (HUDWidgetInstance)
+	{
+		HUDWidgetInstance->RemoveFromParent();
+		HUDWidgetInstance = nullptr;
+	}
+	//이미 메뉴가 떠있으면 제거
+	if (MainMenuWidgetInstance)
+	{
+		MainMenuWidgetInstance->RemoveFromParent();
+		MainMenuWidgetInstance = nullptr;
+	}
+	//종료 메뉴가 떠있으면 제거
+	if (EndMenuWidgetInstance)
+	{
+		EndMenuWidgetInstance->RemoveFromParent();
+		EndMenuWidgetInstance = nullptr;
+	}
+	//레벨업 메뉴가 떠있으면 제거
+	if (LevelUpWidgetInstance)
+	{
+		LevelUpWidgetInstance->RemoveFromParent();
+		LevelUpWidgetInstance = nullptr;
+	}
+
+	if (MainMenuWidgetClass)
+	{
+		MainMenuWidgetInstance = CreateWidget<UUserWidget>(this, MainMenuWidgetClass);
+		if (MainMenuWidgetInstance)
+		{
+			MainMenuWidgetInstance->AddToViewport();
+
+			bShowMouseCursor = true;
+			SetInputMode(FInputModeUIOnly());
+		}
+
+		if (UTextBlock *Text = Cast<UTextBlock>(MainMenuWidgetInstance->GetWidgetFromName(TEXT("clearNover"))))
+		{
+			if (bIsClear)
+			{
+				Text->SetText(FText::FromString(TEXT("Game Clear!")));
+			}
+
+			else
+			{
+				Text->SetText(FText::FromString(TEXT("GameOver")));
+			}
+		}
+	}
+}
+
+//게임 HUD 표시
+void ACG_PlayerController::ShowGameHUD()
+{
+	if (HUDWidgetInstance)
+	{	//HUD가 켜져있다면 닫기
+		HUDWidgetInstance->RemoveFromParent();
+		HUDWidgetInstance = nullptr;
+	}
+
+	if (MainMenuWidgetInstance)
+	{	//이미 메뉴가 떠있으면 제거
+		MainMenuWidgetInstance->RemoveFromParent();
+		MainMenuWidgetInstance = nullptr;
+	}
+
+	//종료 메뉴가 떠있으면 제거
+	if (EndMenuWidgetInstance)
+	{
+		EndMenuWidgetInstance->RemoveFromParent();
+		EndMenuWidgetInstance = nullptr;
+	}
+
+	//레벨업 메뉴가 떠있으면 제거
+	if (LevelUpWidgetInstance)
+	{
+		LevelUpWidgetInstance->RemoveFromParent();
+		LevelUpWidgetInstance = nullptr;
+	}
+
+	if (HUDWidgetClass)
+	{
+		HUDWidgetInstance = CreateWidget<UUserWidget>(this, HUDWidgetClass);
+		if (HUDWidgetInstance)
+		{
+			HUDWidgetInstance->AddToViewport();
+
+			bShowMouseCursor = false;
+			SetInputMode(FInputModeGameOnly());
+
+			ACG_GameState* CG_GameState = GetWorld() ? GetWorld()->GetGameState<ACG_GameState>() : nullptr;
+			if (CG_GameState)
+			{
+				CG_GameState->UpdateHUD();
+			}
+		}
+	}
+}
+//게임 시작 - 게임 레벨 오픈, 게임인스턴스 데이터 리셋
+void ACG_PlayerController::StartGame()
+{
+	if (UCG_GameInstance* CG_GameInstance = Cast<UCG_GameInstance>(UGameplayStatics::GetGameInstance(this)))
+	{
+		CG_GameInstance->CurrentLevelIndex = 0;
+		CG_GameInstance->TotalScore = 0;
+	}
+
+	UGameplayStatics::OpenLevel(GetWorld(), FName("StageLevel"));
+}
+
+void ACG_PlayerController::ExitGame()
+{
+	//게임 완전 종료
+	UKismetSystemLibrary::QuitGame(
+		GetWorld(),
+		this,
+		EQuitPreference::Quit,
+		false
+	);
 }

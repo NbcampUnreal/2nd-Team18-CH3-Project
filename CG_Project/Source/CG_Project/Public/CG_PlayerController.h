@@ -36,8 +36,38 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
 	UUserWidget* HUDWidgetInstance;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Menu")
+	TSubclassOf<UUserWidget> MainMenuWidgetClass;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Menu")
+	UUserWidget* MainMenuWidgetInstance;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Menu")
+	TSubclassOf<UUserWidget> EndMenuWidgetClass;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Menu")
+	UUserWidget* EndMenuWidgetInstance;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Level")
+	TSubclassOf<UUserWidget> LevelUpWidgetClass;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Level")
+	UUserWidget* LevelUpWidgetInstance;
+
 	UFUNCTION(BlueprintCallable, Category = "HUD")
 	UUserWidget* GetHUDWidget() const;
+	//HUD 표시
+	UFUNCTION(BlueprintCallable, Category = "HUD")
+	void ShowGameHUD();
+	//게임시작 메뉴 표시
+	UFUNCTION(BlueprintCallable, Category = "Menu")
+	void ShowGameStartMenu();
+	//게임오버 메뉴 표시
+	UFUNCTION(BlueprintCallable, Category = "Menu")
+	void ShowGameOverMenu(bool bIsClear);
+	//게임 시작
+	UFUNCTION(BlueprintCallable, Category = "Menu")
+	void StartGame();
+	UFUNCTION(BlueprintCallable, Category = "Menu")
+	void ExitGame();
+
 
 	virtual void BeginPlay() override;
 };
