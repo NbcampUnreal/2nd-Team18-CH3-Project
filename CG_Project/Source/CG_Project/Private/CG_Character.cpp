@@ -29,8 +29,8 @@ ACG_Character::ACG_Character()
 	OverheadWidget->SetWidgetSpace(EWidgetSpace::Screen);
 
 	// 플레이어 이동속도
-	NormalSpeed = 750.0f;
-	SprintSpeedMultiplier = 2.0f;
+	NormalSpeed = 350.0f;
+	SprintSpeedMultiplier = 1.8f;
 	SprintSpeed = NormalSpeed * SprintSpeedMultiplier;
 
 	GetCharacterMovement()->MaxWalkSpeed = NormalSpeed;
