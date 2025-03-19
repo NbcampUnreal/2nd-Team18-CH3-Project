@@ -95,10 +95,13 @@ protected:
 	void StartSprint(const FInputActionValue& value);
 	UFUNCTION()
 	void StopSprint(const FInputActionValue& value);
-	UFUNCTION()
-	void FireWeapon(const FInputActionValue& value);
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+	void Fire();
 	UFUNCTION()
 	void Roll(const FInputActionValue& value);
+	//¹«±â È¹µæ ÇÔ¼ö
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+	void EquipWeapon();
 
 	// ÇÃ·¹ÀÌ¾î »ç¸Á
 	void OnDeath();
@@ -128,11 +131,5 @@ private:
 	FVector2D MoveInputValue;
 
 	FCriticalSection FireTimeSection;
-public:
-	//¹ß»ç ÇÔ¼ö
-	UFUNCTION(BlueprintCallable, Category = "Weapon")
-	void Fire();
-	// ¹«±â È¹µæ ÇÔ¼ö
-	UFUNCTION(BlueprintCallable, Category = "Weapon")
-	void EquipWeapon();
+	
 };
