@@ -120,18 +120,18 @@ void ACG_PlayerController::ShowGameOverMenu(bool bIsClear)
 		LevelUpWidgetInstance = nullptr;
 	}
 
-	if (MainMenuWidgetClass)
+	if (EndMenuWidgetClass)
 	{
-		MainMenuWidgetInstance = CreateWidget<UUserWidget>(this, MainMenuWidgetClass);
-		if (MainMenuWidgetInstance)
+		EndMenuWidgetInstance = CreateWidget<UUserWidget>(this, EndMenuWidgetClass);
+		if (EndMenuWidgetInstance)
 		{
-			MainMenuWidgetInstance->AddToViewport();
+			EndMenuWidgetInstance->AddToViewport();
 
 			bShowMouseCursor = true;
 			SetInputMode(FInputModeUIOnly());
 		}
 
-		if (UTextBlock *Text = Cast<UTextBlock>(MainMenuWidgetInstance->GetWidgetFromName(TEXT("clearNover"))))
+		if (UTextBlock *Text = Cast<UTextBlock>(EndMenuWidgetInstance->GetWidgetFromName(TEXT("clearNover"))))
 		{
 			if (bIsClear)
 			{

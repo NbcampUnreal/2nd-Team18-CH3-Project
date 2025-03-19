@@ -184,7 +184,7 @@ void ACG_GameState::UpdateHUD()
 
 //ASpawnVolume* ACG_GameState::GetSpawnVolume() const
 //{
-//	return
+//	return Cast<ASpawnVolume>()
 //}
 
 ACG_PlayerController* ACG_GameState::GetCG_PlayerController() const
