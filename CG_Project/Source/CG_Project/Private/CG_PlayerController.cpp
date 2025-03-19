@@ -16,7 +16,8 @@ ACG_PlayerController::ACG_PlayerController()
 	SprintAction(nullptr),
 	HUDWidgetInstance(nullptr),
 	MainMenuWidgetClass(nullptr),
-	MainMenuWidgetInstance(nullptr)
+	MainMenuWidgetInstance(nullptr),
+	FireAction(nullptr)
 {
 }
 

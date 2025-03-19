@@ -6,7 +6,7 @@
 #include "WeaponInterface.generated.h"
 
 
-UINTERFACE(MinimalAPI)
+UINTERFACE(MinimalAPI, NotBlueprintable)
 class UWeaponInterface : public UInterface
 {
 	GENERATED_BODY()

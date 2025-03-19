@@ -30,6 +30,9 @@ public:
 	UInputAction* LookAction;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
 	UInputAction* SprintAction;
+	//발사 액션
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Input)
+	class UInputAction* FireAction;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
 	TSubclassOf<UUserWidget> HUDWidgetClass;

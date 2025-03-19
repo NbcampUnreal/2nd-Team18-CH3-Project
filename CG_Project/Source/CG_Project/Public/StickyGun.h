@@ -12,7 +12,7 @@ class CG_PROJECT_API AStickyGun : public APawn, public IWeaponInterface
 
 public:
 	AStickyGun();
-	
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	virtual void Fire() override;
 	
 	UFUNCTION(BlueprintPure, Category = "Weapon")
