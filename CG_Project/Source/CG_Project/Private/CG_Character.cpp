@@ -7,6 +7,9 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Components/WidgetComponent.h"
 #include "Components/TextBlock.h"
+#include "Components/WidgetComponent.h"
+#include "WeaponInterface.h"
+#include "StickyGun.h"
 
 ACG_Character::ACG_Character()
 {
@@ -47,6 +50,15 @@ void ACG_Character::BeginPlay()
 {
 	Super::BeginPlay();
 	UpdateOverheadHP();
+
+	if (StickyGunClass)
+	{
+		EquipWeapon(); // 무기 소환
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("StickyGunClass is not set!"));
+	}
 }
 
 // 캐릭터 조작 관련
@@ -135,6 +147,16 @@ void ACG_Character::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 					ETriggerEvent::Triggered, 
 					this, 
 					&ACG_Character::Roll
+				);
+			}
+			if (PlayerController->FireAction)
+			{
+				EnhancedInput->BindAction
+				(
+					PlayerController->FireAction,
+					ETriggerEvent::Triggered,
+					this,
+					&ACG_Character::Fire
 				);
 			}
 		}
@@ -260,4 +282,47 @@ void ACG_Character::HealHealth(float Amount)
 void ACG_Character::OnDeath()
 {
 	// 추가해야됨
+}
+
+void ACG_Character::EquipWeapon()
+{
+	// 액터 생성 파라미터 설정
+	FActorSpawnParameters SpawnParams;
+	SpawnParams.Owner = this;
+	SpawnParams.Instigator = GetInstigator();
+
+	// Weapon 액터 소환
+	AActor* NewWeapon = GetWorld()->SpawnActor<AActor>(StickyGunClass, GetActorLocation(), GetActorRotation(), SpawnParams);
+
+	if (NewWeapon)
+	{
+		// 인터페이스 획득 시도
+		IWeaponInterface* InterfaceWeapon = Cast<IWeaponInterface>(NewWeapon);
+
+		if (InterfaceWeapon)
+		{
+			// 무기 부착
+			(Cast<AActor>(InterfaceWeapon))->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, FName("R_thumb_02_s_073Socket")); // 소켓에 부착
+			EquippedWeapon = TScriptInterface<IWeaponInterface>(NewWeapon);
+		}
+	}
+}
+
+void ACG_Character::Fire()
+{
+	float CurrentTime = GetWorld()->GetTimeSeconds();
+
+	// Critical Section 시작 (LastFireTime 접근 전에)
+	FireTimeSection.Lock();
+	
+	if (EquippedWeapon.GetObject())
+	{
+		IWeaponInterface* Weapon = Cast<IWeaponInterface>(EquippedWeapon.GetObject());
+		if (Weapon)
+		{
+			Weapon->Fire(); // 인터페이스를 통해 Fire 함수 직접 호출
+		}
+	}
+	// Critical Section 종료 (LastFireTime 접근 후에)
+	FireTimeSection.Unlock();
 }

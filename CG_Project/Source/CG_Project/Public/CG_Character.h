@@ -2,6 +2,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "WeaponInterface.h"
+#include "StickyGun.h"
+#include "HAL/CriticalSection.h"
 #include "CG_Character.generated.h"
 
 // 3인칭 카메라 조절용
@@ -15,6 +18,9 @@ class UWidgetComponent;
 
 // 이동 관련
 struct FInputActionValue;
+
+//끈끈이 총
+class AStickyGun;
 
 UCLASS()
 class CG_PROJECT_API ACG_Character : public ACharacter
@@ -64,6 +70,10 @@ protected:
 	// 플레이어 입력 관련
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	//발사 액션
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input")
+	class UInputAction* FireAction;
+
 	//// 플레이어 받은 데미지
 	//virtual float TakeDamage();
 
@@ -105,4 +115,24 @@ private:
 
 	// 달리기 속도
 	float SprintSpeed;
+	//장착된 무기
+	//AStickyGun* EquippedWeapon;
+	TScriptInterface<IWeaponInterface> EquippedWeapon;
+	
+	// StickyGun 클래스
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<AStickyGun> StickyGunClass;
+
+	// 이동, 사격 동시 접근 제한
+	FCriticalSection MoveInputSection;
+	FVector2D MoveInputValue;
+
+	FCriticalSection FireTimeSection;
+public:
+	//발사 함수
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+	void Fire();
+	// 무기 획득 함수
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+	void EquipWeapon();
 };
