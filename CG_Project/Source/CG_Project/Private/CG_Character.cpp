@@ -117,6 +117,26 @@ void ACG_Character::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 					&ACG_Character::StopSprint
 				);
 			}
+			if (PlayerController->FireAction)
+			{
+				EnhancedInput->BindAction
+				(
+					PlayerController->FireAction, 
+					ETriggerEvent::Triggered, 
+					this, 
+					&ACG_Character::FireWeapon
+				);
+			}
+			if (PlayerController->RollAction)
+			{
+				EnhancedInput->BindAction
+				(
+					PlayerController->RollAction, 
+					ETriggerEvent::Triggered, 
+					this, 
+					&ACG_Character::Roll
+				);
+			}
 		}
 	}
 }
@@ -181,6 +201,24 @@ void ACG_Character::StopSprint(const FInputActionValue& value)
 	if (GetCharacterMovement())
 	{
 		GetCharacterMovement()->MaxWalkSpeed = NormalSpeed;
+	}
+}
+
+// 사격 (좌클릭)
+void ACG_Character::FireWeapon(const FInputActionValue& value)
+{
+	if (value.Get<bool>())
+	{
+		UE_LOG(LogTemp, Warning, TEXT("FireWeapon Activated!"));
+	}
+}
+
+// 구르기 (우클릭)
+void ACG_Character::Roll(const FInputActionValue& value)
+{
+	if (value.Get<bool>())
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Roll Activated!"));
 	}
 }
 

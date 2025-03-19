@@ -14,6 +14,8 @@ ACG_PlayerController::ACG_PlayerController()
 	JumpAction(nullptr),
 	LookAction(nullptr),
 	SprintAction(nullptr),
+	FireAction(nullptr),
+	RollAction(nullptr),
 	HUDWidgetInstance(nullptr),
 	MainMenuWidgetClass(nullptr),
 	MainMenuWidgetInstance(nullptr)

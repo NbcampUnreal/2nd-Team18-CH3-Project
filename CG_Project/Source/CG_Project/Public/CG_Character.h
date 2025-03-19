@@ -85,6 +85,10 @@ protected:
 	void StartSprint(const FInputActionValue& value);
 	UFUNCTION()
 	void StopSprint(const FInputActionValue& value);
+	UFUNCTION()
+	void FireWeapon(const FInputActionValue& value);
+	UFUNCTION()
+	void Roll(const FInputActionValue& value);
 
 	// 플레이어 사망
 	void OnDeath();
