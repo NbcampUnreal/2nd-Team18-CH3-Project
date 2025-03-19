@@ -26,7 +26,12 @@ public:
 	//스폰 볼륨 내부 무작위 좌표를 얻어오는 함수
 	UFUNCTION(BlueprintCallable, Category = "Spawning")
 	FVector GetRandomPointInVolume() const;
+
 	//적을 스폰하는 함수
 	//UFUNCTION(BlueprintCallable, Category = "Spawning")
 	//AActor* SpawnEnemy();
+
+	//소환할 몬스터 목록
+	UPROPERTY(EditAnywhere, Category = "Spawning")
+	TArray<TSubclassOf<AActor>> EnemyClasses;
 };

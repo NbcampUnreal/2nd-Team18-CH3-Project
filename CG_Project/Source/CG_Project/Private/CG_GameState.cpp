@@ -70,17 +70,7 @@ void ACG_GameState::StartWave()
 //웨이브 종료
 void ACG_GameState::EndWave()
 {
-	GetWorldTimerManager().ClearTimer(WaveTimerHandle); //WaveTimerHandle 초기화
-
-	++CurrentLevelIndex; //레벨 증가
-	if (CurrentLevelIndex >= MaxLevels)
-	{
-		EndGame();
-	}
-	else
-	{
-		StartWave();
-	}
+	EndGame();
 }
 
 //웨이브 시간 종료
@@ -92,11 +82,9 @@ void ACG_GameState::OnWaveTimeUp()
 	}
 	else
 	{
-		GetWorldTimerManager().ClearTimer(WaveTimerHandle);
+		GetWorldTimerManager().ClearTimer(WaveTimerHandle); //WaveTimerHandle 초기화
+		EndGame();
 	}
-
-
-	//시간 동결 후 보스 소환
 }
 
 void ACG_GameState::EndGame()
@@ -187,10 +175,6 @@ void ACG_GameState::UpdateHUD()
 					if (GetWorldTimerManager().IsTimerActive(WaveTimerHandle))
 					{
 						TimerText->SetText(FText::FromString(FString::Printf(TEXT("%d : %.0f"), Min, RemainingTime)));
-					}
-					else
-					{
-						TimerText->SetText(FText::FromString(FString::Printf(TEXT("Boss Stage"))));
 					}
 				}
 			}
