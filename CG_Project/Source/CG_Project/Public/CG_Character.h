@@ -4,16 +4,16 @@
 #include "GameFramework/Character.h"
 #include "CG_Character.generated.h"
 
-// 3ÀÎÄª Ä«¸Þ¶ó Á¶Àý¿ë
+// 3ï¿½ï¿½Äª Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 class USpringArmComponent;
 
-// 3ÀÎÄª Ä«¸Þ¶ó
+// 3ï¿½ï¿½Äª Ä«ï¿½Þ¶ï¿½
 class UCameraComponent;
 
-// OverheadWidgetÀ» À§ÇÑ Àü¹æ¼±¾ð
+// OverheadWidgetï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½æ¼±ï¿½ï¿½
 class UWidgetComponent;
 
-// ÀÌµ¿ °ü·Ã
+// ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½
 struct FInputActionValue;
 
 UCLASS()
@@ -24,55 +24,55 @@ class CG_PROJECT_API ACG_Character : public ACharacter
 public:
 	ACG_Character();
 
-	// 3ÀÎÄª Ä«¸Þ¶ó Á¶Àý¿ë
+	// 3ï¿½ï¿½Äª Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")
 	USpringArmComponent* SpringArmComp;
 
-	// 3ÀÎÄª Ä«¸Þ¶ó
+	// 3ï¿½ï¿½Äª Ä«ï¿½Þ¶ï¿½
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")
 	UCameraComponent* CameraComp;
 
-	// OverheadWidget °ü·Ã
+	// OverheadWidget ï¿½ï¿½ï¿½ï¿½
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI")
 	UWidgetComponent* OverheadWidget;
 
-	// Ã¼·Â °ü·Ã getÇÔ¼ö, Ã¼·Â È¸º¹
+	// Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ getï¿½Ô¼ï¿½, Ã¼ï¿½ï¿½ È¸ï¿½ï¿½
 	UFUNCTION(BlueprintPure, Category = "health")
 	float GetHealth() const;
 	UFUNCTION(BlueprintCallable, Category = "health")
 	void HealHealth(float Amount);
 
 protected:
-	// ÃÖ´ë Ã¼·Â, ÇöÀç Ã¼·Â
+	// ï¿½Ö´ï¿½ Ã¼ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ Ã¼ï¿½ï¿½
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
 	float MaxHealth;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
 	float CurrentHealth;
 
-	// ÃÖ´ë °æÇèÄ¡, ÇöÀç °æÇèÄ¡
+	// ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¡, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¡
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Exp")
 	float MaxExp;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Exp")
 	float CurrentExp;
 
-	// ÇöÀç ·¹º§
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Level")
 	float CurrentLevel;
 
 	virtual void BeginPlay() override;
 
-	// ÇÃ·¹ÀÌ¾î ÀÔ·Â °ü·Ã
+	// ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ô·ï¿½ ï¿½ï¿½ï¿½ï¿½
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	//// ÇÃ·¹ÀÌ¾î ¹ÞÀº µ¥¹ÌÁö
+	//// ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	//virtual float TakeDamage();
 
-	//// ÇÃ·¹ÀÌ¾î ÁÖ´Â µ¥¹ÌÁö *·¹º§ ºñ·Ê °ø½ÄÀÌ µé¾î°¡¾ßÇÔ
+	//// ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ *ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½î°¡ï¿½ï¿½ï¿½ï¿½
 	//virtual float DealDamage();
 
-	// ÇÃ·¹ÀÌ¾î ÀÌµ¿ °ü·Ã
-	// ÂüÁ¶(FInputActionValue&)·Î °¡Á®¿À´Â ÀÌÀ¯´Â ¾È±×·¯¸é ºÒ·¯¿À´Âµ¥ ¸®¼Ò½º°¡ ³Ê¹« ¸¹ÀÌ µé¾î°¡¼­
-	// ¸®ÇÃ·º¼Ç¿¡ µî·ÏÀ» ÇØ³ö¾ß ¿£Áø¿¡¼­ ¾ê³»µéÀ» ÀÎ½Ä ÇÒ ¼ö ÀÖÀ½
+	// ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½
+	// ï¿½ï¿½ï¿½ï¿½(FInputActionValue&)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½È±×·ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½Âµï¿½ ï¿½ï¿½ï¿½Ò½ï¿½ï¿½ï¿½ ï¿½Ê¹ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½î°¡ï¿½ï¿½
+	// ï¿½ï¿½ï¿½Ã·ï¿½ï¿½Ç¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø³ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ê³»ï¿½ï¿½ï¿½ï¿½ ï¿½Î½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	UFUNCTION()
 	void Move(const FInputActionValue& value);
 	UFUNCTION()
@@ -86,19 +86,19 @@ protected:
 	UFUNCTION()
 	void StopSprint(const FInputActionValue& value);
 
-	// ÇÃ·¹ÀÌ¾î »ç¸Á
+	// ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½
 	void OnDeath();
 
-	// ¸Ó¸® À§ Ã¼·Â¹Ù °ü·Ã
+	// ï¿½Ó¸ï¿½ ï¿½ï¿½ Ã¼ï¿½Â¹ï¿½ ï¿½ï¿½ï¿½ï¿½
 	void UpdateOverheadHP();
 
 private:
-	// ±âº» ÀÌµ¿¼Óµµ
+	// ï¿½âº» ï¿½Ìµï¿½ï¿½Óµï¿½
 	float NormalSpeed;
 
-	// ´Þ¸®±â ¼Óµµ ¹èÀ²
+	// ï¿½Þ¸ï¿½ï¿½ï¿½ ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½
 	float SprintSpeedMultiplier;
 
-	// ´Þ¸®±â ¼Óµµ
+	// ï¿½Þ¸ï¿½ï¿½ï¿½ ï¿½Óµï¿½
 	float SprintSpeed;
 };

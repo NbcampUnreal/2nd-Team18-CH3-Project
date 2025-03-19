@@ -12,34 +12,34 @@ ACG_Character::ACG_Character()
 {
 	PrimaryActorTick.bCanEverTick = false;
 
-	// Ä«¸Þ¶ó Á¶Á¤ ¸·´ë °ü·Ã
+	// Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	SpringArmComp = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
 	SpringArmComp->SetupAttachment(RootComponent);
 	SpringArmComp->TargetArmLength = 300.0f;
 	SpringArmComp->bUsePawnControlRotation = true;
 
-	// Ä«¸Þ¶ó
+	// Ä«ï¿½Þ¶ï¿½
 	CameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	CameraComp->SetupAttachment(SpringArmComp, USpringArmComponent::SocketName);
 	CameraComp->bUsePawnControlRotation = false;
 
-	// ¸Ó¸® À§ HP °ü·Ã À§Á¬
+	// ï¿½Ó¸ï¿½ ï¿½ï¿½ HP ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	OverheadWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("OverheadWidget"));
 	OverheadWidget->SetupAttachment(GetMesh());
 	OverheadWidget->SetWidgetSpace(EWidgetSpace::Screen);
 
-	// ÇÃ·¹ÀÌ¾î ÀÌµ¿¼Óµµ
+	// ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ìµï¿½ï¿½Óµï¿½
 	NormalSpeed = 750.0f;
 	SprintSpeedMultiplier = 2.0f;
 	SprintSpeed = NormalSpeed * SprintSpeedMultiplier;
 
 	GetCharacterMovement()->MaxWalkSpeed = NormalSpeed;
 
-	// Ä³¸¯ÅÍ Ã¼·Â
+	// Ä³ï¿½ï¿½ï¿½ï¿½ Ã¼ï¿½ï¿½
 	MaxHealth = (CurrentLevel * 10.0f) + 90.0f;
 	CurrentHealth = MaxHealth;
 
-	// Ä³¸¯ÅÍ ·¹º§ 
+	// Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
 	CurrentLevel = 1;
 }
 
@@ -49,7 +49,7 @@ void ACG_Character::BeginPlay()
 	UpdateOverheadHP();
 }
 
-// Ä³¸¯ÅÍ Á¶ÀÛ °ü·Ã
+// Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 void ACG_Character::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
@@ -121,7 +121,7 @@ void ACG_Character::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 	}
 }
 
-// ÀÌµ¿
+// ï¿½Ìµï¿½
 void ACG_Character::Move(const FInputActionValue& value)
 {
 	if (!Controller) return;
@@ -139,7 +139,7 @@ void ACG_Character::Move(const FInputActionValue& value)
 	}
 }
 
-// Á¡ÇÁ(½ÃÀÛ)
+// ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½)
 void ACG_Character::StartJump(const FInputActionValue& value)
 {
 	if (value.Get<bool>())
@@ -148,7 +148,7 @@ void ACG_Character::StartJump(const FInputActionValue& value)
 	}
 }
 
-// Á¡ÇÁ(¸ØÃã)
+// ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½)
 void ACG_Character::StopJump(const FInputActionValue& value)
 {
 	if (!value.Get<bool>())
@@ -157,7 +157,7 @@ void ACG_Character::StopJump(const FInputActionValue& value)
 	}
 }
 
-// ½ÃÁ¡
+// ï¿½ï¿½ï¿½ï¿½
 void ACG_Character::Look(const FInputActionValue& value)
 {
 	FVector2D LookInput = value.Get<FVector2D>();
@@ -166,7 +166,7 @@ void ACG_Character::Look(const FInputActionValue& value)
 	AddControllerPitchInput(LookInput.Y);
 }
 
-// ´Þ¸®±â(½ÃÀÛ)
+// ï¿½Þ¸ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½)
 void ACG_Character::StartSprint(const FInputActionValue& value)
 {
 	if (GetCharacterMovement())
@@ -175,7 +175,7 @@ void ACG_Character::StartSprint(const FInputActionValue& value)
 	}
 }
 
-// ´Þ¸®±â(¸ØÃã)
+// ï¿½Þ¸ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½)
 void ACG_Character::StopSprint(const FInputActionValue& value)
 {
 	if (GetCharacterMovement())
@@ -184,42 +184,42 @@ void ACG_Character::StopSprint(const FInputActionValue& value)
 	}
 }
 
-// Ä³¸¯ÅÍ ¸Ó¸® À§ hp¹Ù
+// Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½Ó¸ï¿½ ï¿½ï¿½ hpï¿½ï¿½
 void ACG_Character::UpdateOverheadHP()
 {
-	// Ãß°¡ÇØ¾ßµÊ
+	// ï¿½ß°ï¿½ï¿½Ø¾ßµï¿½
 }
 
-// ÇöÀç Ã¼·Â getÇÔ¼ö
+// ï¿½ï¿½ï¿½ï¿½ Ã¼ï¿½ï¿½ getï¿½Ô¼ï¿½
 float ACG_Character::GetHealth() const
 {
 	return CurrentHealth;
 }
 
-// Ã¼·Â È¸º¹ ¸ÅÄ¿´ÏÁò
+// Ã¼ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½
 void ACG_Character::HealHealth(float Amount)
 {
-	// Clamp(ÃÖ¼Ò~ÃÖ´ë Ã¼·Â »çÀÌÀÇ °ª, ÃÖ¼ÒÃ¼·Â, ÃÖ´ëÃ¼·Â)
+	// Clamp(ï¿½Ö¼ï¿½~ï¿½Ö´ï¿½ Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½, ï¿½Ö¼ï¿½Ã¼ï¿½ï¿½, ï¿½Ö´ï¿½Ã¼ï¿½ï¿½)
 	CurrentHealth = FMath::Clamp(CurrentHealth + Amount, 0.0f, MaxHealth);
-	// °è»êÀÌ ³¡³­ µÚ Ã¼·Â¹Ù À§Á¬¿¡ ¾÷µ¥ÀÌÆ®
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Ã¼ï¿½Â¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
 	UpdateOverheadHP();
 }
 
-//// Ä³¸¯ÅÍ µ¥¹ÌÁö °ø½Ä(·¹º§ ºñ·Ê µ¥¹ÌÁö Áõ°¡ Æ÷ÇÔÇØ¾ß ÇÔ)
+//// Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ ï¿½ï¿½)
 //float ACG_Character::DealDamage()
 //{
-//	// Ãß°¡ÇØ¾ßµÊ
+//	// ï¿½ß°ï¿½ï¿½Ø¾ßµï¿½
 // 
 //}
 //
-//// Ä³¸¯ÅÍ ¹Þ´Â µ¥¹ÌÁö °ø½Ä
+//// Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½Þ´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 //float ACG_Character::TakeDamage()
 //{
-//	// Ãß°¡ÇØ¾ßµÊ
+//	// ï¿½ß°ï¿½ï¿½Ø¾ßµï¿½
 //}
 
-// Ä³¸¯ÅÍ »ç¸Á½Ã ÀÌº¥Æ®(°ÔÀÓ¿À¹ö µî)
+// Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìºï¿½Æ®(ï¿½ï¿½ï¿½Ó¿ï¿½ï¿½ï¿½ ï¿½ï¿½)
 void ACG_Character::OnDeath()
 {
-	// Ãß°¡ÇØ¾ßµÊ
+	// ï¿½ß°ï¿½ï¿½Ø¾ßµï¿½
 }

@@ -21,51 +21,51 @@ public:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Enemy")
-	int32 SpawnedEnemyCount; //½ºÆù½ÃÅ³ Àû °¹¼ö
+	int32 SpawnedEnemyCount; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å³ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Enemy")
-	int32 DestroyEnemyCount; //Á×ÀÎ Àû ¼ö
+	int32 DestroyEnemyCount; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Enemy")
-	int32 Exp; //°æÇèÄ¡
+	int32 Exp; //ï¿½ï¿½ï¿½ï¿½Ä¡
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Wave")
-	int32 CurrentLevelIndex; //ÇöÀç ¿þÀÌºê
+	int32 CurrentLevelIndex; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Wave")
-	int32 MaxLevels; //ÃÖ´ë ¿þÀÌºê
+	int32 MaxLevels; //ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Wave")
-	float LevelDuration; //¿þÀÌºê ÇöÀç ½Ã°£
+	float LevelDuration; //ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Wave")
-	int32 Min; //³²Àº ºÐ
+	int32 Min; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Wave")
-	TArray<int32> EnemyToSpawnPerWave; //¿þÀÌºê ´ç Àû ½ºÆù
+	TArray<int32> EnemyToSpawnPerWave; //ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-	FTimerHandle WaveTimerHandle; //¿þÀÌºê Å¸ÀÌ¸ÓÇÚµé
-	FTimerHandle HUDUpdateTimerHandle; //HUD ¾÷µ¥ÀÌÆ® Å¸ÀÌ¸Ó ÇÚµé
+	FTimerHandle WaveTimerHandle; //ï¿½ï¿½ï¿½Ìºï¿½ Å¸ï¿½Ì¸ï¿½ï¿½Úµï¿½
+	FTimerHandle HUDUpdateTimerHandle; //HUD ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® Å¸ï¿½Ì¸ï¿½ ï¿½Úµï¿½
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Score")
-	int32 Score; //ÃÑÁ¡ ÀúÀå º¯¼ö
+	int32 Score; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	UFUNCTION(BlueprintPure, Category = "Score")
-	int32 GetScore() const; //ÇöÀç Á¡¼ö
+	int32 GetScore() const; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	UFUNCTION(BlueprintCallable, Category = "Score")
-	void AddScore(int32 Amount); //Á¡¼ö Ãß°¡ ÇÔ¼ö
+	void AddScore(int32 Amount); //ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ ï¿½Ô¼ï¿½
 
-	//°ÔÀÓ¿À¹ö
+	//ï¿½ï¿½ï¿½Ó¿ï¿½ï¿½ï¿½
 	void OnGameOver();
-	//ÀûÀ» ¾²·¯¶ß·ÈÀ» ¶§ È£Ãâ
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß·ï¿½ï¿½ï¿½ ï¿½ï¿½ È£ï¿½ï¿½
 	void OnEnemyDestroyed();
-	//Àû »ý¼º
+	//ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	//void GenerateEnemy();
 
-	//¿þÀÌºê ½ÃÀÛ, ³¡
+	//ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½
 	void StartWave();
 	void EndWave();
-	//¿þÀÌºê ½Ã°£ Á¾·á
+	//ï¿½ï¿½ï¿½Ìºï¿½ ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½
 	void OnWaveTimeUp();
 	void EndGame();
-	//HUD ¾÷µ¥ÀÌÆ®
+	//HUD ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
 	void UpdateHUD();
 
 private:
-	//ÇïÆÛ ÇÔ¼ö
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
 	//ASpawnVolume *GetSpawnVolume() const;
 	ACG_PlayerController *GetCG_PlayerController() const;
 	UCG_GameInstance *GetCG_GameInstance() const;
