@@ -305,6 +305,10 @@ void ACG_Character::Fire()
 			Weapon->Fire(); // ÀÎÅÍÆäÀÌ½º¸¦ ÅëÇØ Fire ÇÔ¼ö Á÷Á¢ È£Ãâ
 		}
 	}
+<<<<<<< Updated upstream
 	// Critical Section Á¾·á (LastFireTime Á¢±Ù ÈÄ¿¡)
+=======
+	// Critical Section ì¢…ë£Œ (LastFireTime ì ‘ê·¼ í›„ì—)
+>>>>>>> Stashed changes
 	FireTimeSection.Unlock();
 }
