@@ -107,7 +107,7 @@ int32 ACG_GameState::GetScore() const
 //점수 추가
 void ACG_GameState::AddScore(int32 Amount)
 {
-
+	Score += Amount;
 }
 
 
@@ -176,6 +176,11 @@ void ACG_GameState::UpdateHUD()
 					{
 						TimerText->SetText(FText::FromString(FString::Printf(TEXT("%d : %.0f"), Min, RemainingTime)));
 					}
+				}
+
+				if (UTextBlock* TimerText = Cast<UTextBlock>(HUDWidget->GetWidgetFromName(TEXT("Score"))))
+				{
+					TimerText->SetText(FText::FromString(FString::Printf(TEXT("Score : %d"), Score)));
 				}
 			}
 		}
