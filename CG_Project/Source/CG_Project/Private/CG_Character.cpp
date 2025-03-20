@@ -284,7 +284,7 @@ void ACG_Character::EquipWeapon()
 		if (InterfaceWeapon)
 		{
 			// 무기 부착
-			(Cast<AActor>(InterfaceWeapon))->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, FName("R_thumb_02_s_073Socket")); // 소켓에 부착
+			(Cast<AActor>(InterfaceWeapon))->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, FName("chest_s_07Socket")); // 소켓에 부착
 			EquippedWeapon = TScriptInterface<IWeaponInterface>(NewWeapon);
 		}
 	}
