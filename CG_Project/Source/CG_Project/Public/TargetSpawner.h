@@ -13,7 +13,7 @@ public:
 	void SpawnTarget();
 	void OnTargetHit();
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Time")
 	float TargetSpawnTime;
 
 protected:

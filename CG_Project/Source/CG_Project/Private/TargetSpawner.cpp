@@ -8,13 +8,11 @@ void ATargetSpawner::BeginPlay()
 {
 	Super::BeginPlay();
 	SpawnTarget();
-	TargetSpawnTime = 3.0f;
+	TargetSpawnTime = 1.0f;
 }
 
 void ATargetSpawner::SpawnTarget()
 {
-	TargetSpawnTime = 3.0f;
-
 	if (!TargetClass) return;
 
 	//랜덤 위치 생성

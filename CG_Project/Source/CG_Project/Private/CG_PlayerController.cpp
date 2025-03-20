@@ -131,7 +131,7 @@ void ACG_PlayerController::ShowGameOverMenu(bool bIsClear)
 			SetInputMode(FInputModeUIOnly());
 		}
 
-		if (UTextBlock *Text = Cast<UTextBlock>(EndMenuWidgetInstance->GetWidgetFromName(TEXT("clearNover"))))
+		if (UTextBlock* Text = Cast<UTextBlock>(EndMenuWidgetInstance->GetWidgetFromName(TEXT("clearNover"))))
 		{
 			if (bIsClear)
 			{
@@ -141,6 +141,16 @@ void ACG_PlayerController::ShowGameOverMenu(bool bIsClear)
 			else
 			{
 				Text->SetText(FText::FromString(TEXT("GameOver")));
+			}
+		}
+
+		if (UTextBlock* Text = Cast<UTextBlock>(EndMenuWidgetInstance->GetWidgetFromName(TEXT("Score"))))
+		{
+
+			ACG_GameState* GameState = GetWorld() ? GetWorld()->GetGameState<ACG_GameState>() : nullptr;
+			if (GameState)
+			{
+				Text->SetText(FText::FromString(FString::Printf(TEXT("Score : %d"), GameState->Score)));
 			}
 		}
 	}
