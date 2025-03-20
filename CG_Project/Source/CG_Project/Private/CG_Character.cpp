@@ -284,7 +284,7 @@ void ACG_Character::EquipWeapon()
 		if (InterfaceWeapon)
 		{
 			// ???? ????
-			(Cast<AActor>(InterfaceWeapon))->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, FName("R_thumb_02_s_073Socket")); // ????? ????
+			(Cast<AActor>(InterfaceWeapon))->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, FName("chest_s_07Socket")); // ????? ????
 			EquippedWeapon = TScriptInterface<IWeaponInterface>(NewWeapon);
 		}
 	}
